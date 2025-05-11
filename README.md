@@ -1,0 +1,2 @@
+# zero_deeplearning2
+ゼロから作るDeep Learning2をgolangで実装してみる
