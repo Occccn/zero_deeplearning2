@@ -1,0 +1,27 @@
+# バイナリファイル（OSごとのビルド成果物）
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+main
+
+# ビルド出力ファイル
+*.out
+
+
+# Go modules キャッシュ（通常はグローバルにあるので不要だが念のため）
+# go.sum
+
+# ワークスペースファイル（Go 1.18+）
+go.work
+go.work.sum
+
+# テスト出力
+coverage.out
+*.coverprofile
+
+# OSごとの不要ファイル
+.DS_Store
+Thumbs.db
