@@ -1,4 +1,4 @@
-package pjt2
+package similarity
 
 import (
 	"gonum.org/v1/gonum/mat"
