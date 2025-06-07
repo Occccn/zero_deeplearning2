@@ -20,14 +20,14 @@ func (matmal *Matmal) Forward(x *mat.Dense) *mat.Dense {
 	return output
 }
 
-func (matmal *Matmal) Backward(grad *mat.Dense) *mat.Dense {
+func (matmal *Matmal) Backward(dout *mat.Dense) *mat.Dense {
 	// np.dot(grad, matmal.Params.T)
-	dx := mat.NewDense(grad.RawMatrix().Rows, matmal.X.RawMatrix().Cols, nil)
-	dx.Mul(grad, matmal.Params.T())
+	dx := mat.NewDense(dout.RawMatrix().Rows, matmal.X.RawMatrix().Cols, nil)
+	dx.Mul(dout, matmal.Params.T())
 
 	// matmal.Grad = np.dot(matmal.X.T, grad)
-	matmal.Grad = mat.NewDense(matmal.X.RawMatrix().Cols, grad.RawMatrix().Cols, nil)
-	matmal.Grad.Mul(matmal.X.T(), grad)
+	matmal.Grad = mat.NewDense(matmal.X.RawMatrix().Cols, dout.RawMatrix().Cols, nil)
+	matmal.Grad.Mul(matmal.X.T(), dout)
 
 	return dx
 }
