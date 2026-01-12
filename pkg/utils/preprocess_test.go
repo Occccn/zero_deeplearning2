@@ -13,7 +13,12 @@ func TestPreprocess(t *testing.T) {
 		{
 			name: "Test Preprocess",
 			text: "Hello, world",
-			want: "Hello, world",
+			want: "hello, world",
+		},
+		{
+			name: "Test Preprocess",
+			text: "Hello, world.",
+			want: "hello, world .",
 		},
 	}
 	for _, tt := range tests {
