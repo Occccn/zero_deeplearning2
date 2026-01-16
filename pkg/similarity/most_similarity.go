@@ -28,7 +28,7 @@ func MostSimilarity(query string, word_to_id map[string]int64, id_to_word map[in
 			for i := 0; i < vocab_size; i++ {
 				sims = append(sims, similarityPair{
 					index: int64(i),
-					score: mat.Dot(query_vector, word_matrix.RowView(i)),
+					score: CosineSimilarity(query_vector, word_matrix.RowView(i)),
 				})
 			}
 			count := 0
@@ -45,7 +45,7 @@ func MostSimilarity(query string, word_to_id map[string]int64, id_to_word map[in
 					continue
 				}
 				count++
-				fmt.Print("word: ", id_to_word[sim.index], " similarity: ", sim.score)
+				fmt.Print("word: ", id_to_word[sim.index], " similarity: ", sim.score, "\n")
 
 			}
 		}
