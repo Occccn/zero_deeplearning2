@@ -24,11 +24,11 @@ func TestMostSimilarity(t *testing.T) {
 		2: "cherry",
 	}
 
-	word_matrix := []mat.Vector{
-		mat.NewVecDense(2, []float64{1, 0}),   // apple
-		mat.NewVecDense(2, []float64{0, 1}),   // banana
-		mat.NewVecDense(2, []float64{1.1, 0}), // cherry
-	}
+	word_matrix := mat.NewDense(3, 2, []float64{
+		1, 0, // apple  (行0)
+		0, 1, // banana (行1)
+		1.1, 0, // cherry (行2)
+	})
 
 	// 標準出力を一時的にパイプに切り替え
 	oldStdout := os.Stdout
