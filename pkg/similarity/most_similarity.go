@@ -12,7 +12,7 @@ type similarityPair struct {
 	score float64
 }
 
-func MostSimilarity(query string, word_to_id map[string]int64, id_to_word map[int64]string, word_matrix []mat.Vector, top_k int) {
+func MostSimilarity(query string, word_to_id map[string]int64, id_to_word map[int64]string, word_matrix *mat.Dense, top_k int) {
 	_, ok := word_to_id[query]
 	if !ok {
 		println("word not found")
@@ -21,14 +21,14 @@ func MostSimilarity(query string, word_to_id map[string]int64, id_to_word map[in
 	for _, word := range id_to_word {
 		if word == query {
 			query_id := word_to_id[query]
-			query_vector := word_matrix[query_id]
+			query_vector := word_matrix.RowView(int(query_id))
 
-			vocab_size := len(word_matrix)
+			vocab_size, _ := word_matrix.Dims()
 			sims := make([]similarityPair, 0, vocab_size)
-			for i, matrix := range word_matrix {
+			for i := 0; i < vocab_size; i++ {
 				sims = append(sims, similarityPair{
 					index: int64(i),
-					score: mat.Dot(query_vector, matrix),
+					score: mat.Dot(query_vector, word_matrix.RowView(i)),
 				})
 			}
 			count := 0
