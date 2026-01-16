@@ -39,6 +39,41 @@ func TestCreateCoMatrix(t *testing.T) {
 				0, 0, 0, 1, 1, 0,
 			}),
 		},
+		{
+			name:        "test small corpus",
+			corpus:      []int64{0, 1, 2},
+			window_size: 1,
+			co_matrix: mat.NewDense(3, 3, []float64{
+				0, 1, 0,
+				1, 0, 1,
+				0, 1, 0,
+			}),
+		},
+		{
+			name:        "test single element",
+			corpus:      []int64{0},
+			window_size: 1,
+			co_matrix:   mat.NewDense(1, 1, []float64{0}),
+		},
+		{
+			name:        "test repeated words",
+			corpus:      []int64{0, 1, 0, 1}, // word 0 と 1 が交互
+			window_size: 1,
+			co_matrix: mat.NewDense(2, 2, []float64{
+				0, 1, // word 0 の隣は word 1
+				1, 0, // word 1 の隣は word 0
+			}),
+		},
+		{
+			name:        "test window larger than corpus",
+			corpus:      []int64{0, 1, 2},
+			window_size: 5, // corpus より大きい
+			co_matrix: mat.NewDense(3, 3, []float64{
+				0, 1, 1,
+				1, 0, 1,
+				1, 1, 0,
+			}),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
