@@ -6,7 +6,13 @@ import (
 
 func CreateCoMatrix(corpus []int64, window_size int) *mat.Dense {
 	length := len(corpus)
-	co_matrix := mat.NewDense(length, length, nil)
+	// ユニークな単語IDを数える
+	unique := make(map[int64]bool)
+	for _, id := range corpus {
+		unique[id] = true
+	}
+	vocab_size := len(unique)
+	co_matrix := mat.NewDense(vocab_size, vocab_size, nil)
 	for i, word_id1 := range corpus {
 		for j := 1; j <= window_size; j++ {
 			left_index := i - j
