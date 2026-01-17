@@ -7,7 +7,7 @@ import (
 func SumColumn(x *mat.Dense) *mat.Dense {
 	_, col := x.Dims()
 	S := mat.NewDense(1, col, nil)
-	for i := 0; i < col; i++ {
+	for i := range col {
 		sum := mat.Sum(x.ColView(i))
 		S.Set(0, i, sum)
 	}
