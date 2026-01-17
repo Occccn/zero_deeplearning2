@@ -8,6 +8,6 @@ import (
 func main() {
 	text := "You say goodbye and I say hello."
 	corpus, word_to_id, id_to_word := utils.Preprocess(text)
-	co_matrix := utils.CreateCoMatrix(corpus, 1)
+	co_matrix := utils.CreateCoMatrix(corpus, 7, 1)
 	similarity.MostSimilarity("you", word_to_id, id_to_word, co_matrix, 5)
 }
