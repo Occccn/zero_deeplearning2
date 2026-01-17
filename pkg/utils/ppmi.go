@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"math"
+
 	"gonum.org/v1/gonum/mat"
 )
 
@@ -14,18 +16,17 @@ func SumColumn(x *mat.Dense) *mat.Dense {
 	return S
 }
 
-// func PPMICalculation(co_matrix *mat.Dense, verbose bool) *mat.Dense {
-// 	eps := 1e-8
-// 	row, col := co_matrix.Dims()
-// 	matrix := mat.NewDense(row, col, nil)
-// 	N := mat.Sum(co_matrix)
-// 	for i := 0; i < row; i++ {
-
-// 	rows, cols := co_matrix.Dims()
-// 	for i := 0; i < rows; i++ {
-// 		for j := 0; j < cols; j++ {
-// 			co_matrix.Set(i, j, math.Log(co_matrix.At(i, j) / (rows * cols)))
-// 		}
-// 	}
-// 	return co_matrix
-// }
+func PPMICalculation(co_matrix *mat.Dense) *mat.Dense {
+	eps := 1e-8
+	row, col := co_matrix.Dims()
+	matrix := mat.NewDense(row, col, nil)
+	N := mat.Sum(co_matrix)
+	S := SumColumn(co_matrix)
+	for i := range row {
+		for j := range col {
+			pmi := math.Log2(co_matrix.At(i, j) * N / (S.At(0, j)*S.At(0, j) + eps))
+			matrix.Set(i, j, math.Max(pmi, 0))
+		}
+	}
+	return matrix
+}
