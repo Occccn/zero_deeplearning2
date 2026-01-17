@@ -24,7 +24,7 @@ func PPMICalculation(co_matrix *mat.Dense) *mat.Dense {
 	S := SumColumn(co_matrix)
 	for i := range row {
 		for j := range col {
-			pmi := math.Log2(co_matrix.At(i, j) * N / (S.At(0, j)*S.At(0, j) + eps))
+			pmi := math.Log2(co_matrix.At(i, j) * N / (S.At(0, i)*S.At(0, j) + eps))
 			matrix.Set(i, j, math.Max(pmi, 0))
 		}
 	}
