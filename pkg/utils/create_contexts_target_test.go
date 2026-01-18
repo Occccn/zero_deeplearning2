@@ -26,7 +26,7 @@ func TestCreateContextTarget(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := CreateContextTarget(tt.corpus, tt.window_size)
+			got := CreateContextsTarget(tt.corpus, tt.window_size)
 			if !mat.Equal(got, tt.expected) {
 				t.Errorf("CreateContextTarget() = %v, want %v", got, tt.expected)
 			}
