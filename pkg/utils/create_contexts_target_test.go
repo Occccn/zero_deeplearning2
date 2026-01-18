@@ -23,6 +23,14 @@ func TestCreateContextTarget(t *testing.T) {
 				2, 4,
 				3, 5,
 			})},
+		{
+			name:        "Test CreateContextTarget with window_size=2",
+			corpus:      []int64{0, 1, 2, 3, 4, 5},
+			window_size: 2,
+			expected: mat.NewDense(2, 4, []float64{
+				0, 1, 3, 4,
+				1, 2, 4, 5,
+			})},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
