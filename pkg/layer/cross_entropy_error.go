@@ -7,28 +7,29 @@ import (
 )
 
 func CrossEntropyError(y *mat.Dense, t *mat.Dense) float64 {
-	yRows, yCols := y.Dims()
+	batchSize, yCols := y.Dims()
 	tRows, tCols := t.Dims()
 
-	if yRows != 1 {
-		panic("CrossEntropyError only supports a 1-row matrix")
-	}
+	var totalLoss float64
 
-	var targetIdx int
+	for b := range batchSize {
+		var targetIdx int
 
-	// 教師データがone-hot-vectorの場合、正解ラベルのインデックスに変換
-	if tRows == yRows && tCols == yCols {
-		// one-hot形式: argmaxで変換
-		for i := range yCols {
-			if t.At(0, i) == 1 {
-				targetIdx = i
-				break
+		// one-hot形式
+		if tRows == batchSize && tCols == yCols {
+			for i := range yCols {
+				if t.At(b, i) == 1 {
+					targetIdx = i
+					break
+				}
 			}
+		} else {
+			// インデックス形式
+			targetIdx = int(t.At(b, 0))
 		}
-	} else {
-		// インデックス形式: そのまま使用
-		targetIdx = int(t.At(0, 0))
+
+		totalLoss += -math.Log(y.At(b, targetIdx) + 1e-7)
 	}
 
-	return -math.Log(y.At(0, targetIdx) + 1e-7)
+	return totalLoss / float64(batchSize) // 平均を返す
 }
