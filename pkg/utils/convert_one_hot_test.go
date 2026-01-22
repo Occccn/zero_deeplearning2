@@ -33,9 +33,9 @@ func TestConvertOneHot(t *testing.T) {
 			target:     mat.NewDense(1, 3, []float64{1, 2, 2}),
 			vocab_size: 3,
 			expected: mat.NewDense(3, 3, []float64{
-				0, 0, 0,
-				1, 0, 0,
-				0, 1, 1,
+				0, 1, 0,
+				0, 0, 1,
+				0, 0, 1,
 			}),
 		},
 	}
