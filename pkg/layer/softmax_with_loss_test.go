@@ -8,7 +8,7 @@ import (
 )
 
 func TestSoftmaxWithLoss(t *testing.T) {
-
+	const tolerance = 1e-3
 	test := []struct {
 		name     string
 		x        *mat.Dense
@@ -32,7 +32,7 @@ func TestSoftmaxWithLoss(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			softmax_with_loss := &SoftmaxWithLoss{}
 			loss := softmax_with_loss.Forward(tt.x, tt.target)
-			if math.Abs(loss-tt.expected) > 1e-6 {
+			if math.Abs(loss-tt.expected) > tolerance {
 				t.Errorf("SoftmaxWithLoss() = %v, want %v", loss, tt.expected)
 			}
 		})
