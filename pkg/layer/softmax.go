@@ -7,25 +7,28 @@ import (
 )
 
 func Softmax(x *mat.Dense) *mat.Dense {
-	r, c := x.Dims()
-	if r != 1 {
-		panic("Softmax only supports a 1-row matrix")
-	}
-	var output *mat.Dense = mat.NewDense(r, c, nil)
-	var max_value float64 = x.At(0, 0)
-	var sum_exp_value float64
-	for i := range c {
-		v := x.At(0, i)
-		if v > max_value {
-			max_value = v
+	rows, cols := x.Dims()
+	output := mat.NewDense(rows, cols, nil)
+
+	for r := 0; r < rows; r++ {
+		maxValue := x.At(r, 0)
+		for c := 0; c < cols; c++ {
+			v := x.At(r, c)
+			if v > maxValue {
+				maxValue = v
+			}
+		}
+
+		var sumExpValue float64
+		for c := 0; c < cols; c++ {
+			sumExpValue += math.Exp(x.At(r, c) - maxValue)
+		}
+
+		for c := 0; c < cols; c++ {
+			v := math.Exp(x.At(r, c)-maxValue) / sumExpValue
+			output.Set(r, c, v)
 		}
 	}
-	for i := range c {
-		sum_exp_value += math.Exp(x.At(0, i) - max_value)
-	}
-	for i := range c {
-		v := math.Exp(x.At(0, i)-max_value) / sum_exp_value
-		output.Set(0, i, v)
-	}
+
 	return output
 }
