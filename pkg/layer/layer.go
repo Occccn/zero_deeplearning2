@@ -6,6 +6,6 @@ import (
 
 // interface: レイヤーの共通の振る舞いを定義
 type Layer interface {
-	Forward(x mat.Matrix) mat.Matrix
-	Backward(dout mat.Matrix) mat.Matrix
+	Forward(x *mat.Dense) *mat.Dense
+	Backward(dout *mat.Dense) *mat.Dense
 }
