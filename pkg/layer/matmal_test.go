@@ -32,9 +32,10 @@ func TestMatmal(t *testing.T) {
 				Params: tt.Params,
 				Grad:   mat.NewDense(tt.Params.RawMatrix().Rows, tt.Params.RawMatrix().Cols, nil),
 			}
+			var layerImpl Layer = matmal
 
 			// Forward pass
-			output := matmal.Forward(tt.x)
+			output := layerImpl.Forward(tt.x)
 			expectedOutput := mat.NewDense(2, 2, []float64{
 				22, 28,
 				49, 64,
@@ -48,7 +49,7 @@ func TestMatmal(t *testing.T) {
 				1, 1,
 				1, 1,
 			})
-			dx := matmal.Backward(dout)
+			dx := layerImpl.Backward(dout)
 			expectedDx := mat.NewDense(2, 3, []float64{
 				3, 7, 11,
 				3, 7, 11,
